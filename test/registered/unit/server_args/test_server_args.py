@@ -2077,7 +2077,7 @@ class TestHiSparseDsaBackendPolicy(unittest.TestCase):
         """Spec workers that never call the HiSparse coordinator hooks would
         write target-verify KV through unmapped device locations; the gate
         must reject them by name instead of letting them corrupt KV."""
-        for algorithm in ("DFLASH", "DSPARK", "NGRAM", "STANDALONE", "FROZEN_KV_MTP"):
+        for algorithm in ("DSPARK", "NGRAM", "STANDALONE", "FROZEN_KV_MTP"):
             with self.subTest(algorithm=algorithm):
                 server_args = ServerArgs(
                     model_path="dummy",
@@ -2103,9 +2103,9 @@ class TestHiSparseDsaBackendPolicy(unittest.TestCase):
                         validate_hisparse(server_args)
 
     def test_hisparse_accepts_wired_speculative_algorithms(self):
-        """EAGLE-family and UNO verify through run_eagle_verify, which binds
-        the HiSparse verify slots; they must keep passing validation."""
-        for algorithm in ("EAGLE", "EAGLE3", "UNO"):
+        """EAGLE-family and UNO verify through run_eagle_verify, and DFLASH
+        binds the verify slots in its own worker; all must pass validation."""
+        for algorithm in ("EAGLE", "EAGLE3", "UNO", "DFLASH"):
             with self.subTest(algorithm=algorithm):
                 server_args = ServerArgs(
                     model_path="dummy",

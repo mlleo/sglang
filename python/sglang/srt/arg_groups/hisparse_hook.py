@@ -29,7 +29,7 @@ HISPARSE_KV_CACHE_DTYPES = ("bfloat16", "fp8_e4m3")
 # Any other worker never rewrites the verify locations in the HiSparse device
 # mapping, so its target-verify KV writes would land on unmapped device slots
 # (silent corruption) -- reject those by name.
-HISPARSE_WIRED_SPEC_ALGORITHMS = ("EAGLE", "EAGLE3", "UNO")
+HISPARSE_WIRED_SPEC_ALGORITHMS = ("EAGLE", "EAGLE3", "UNO", "DFLASH")
 
 
 def _hisparse_default_backend(kv_cache_dtype: str) -> str:
